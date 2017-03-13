@@ -1,0 +1,9 @@
+<h1>{{title}}</h1>
+{{#each posts}}
+	<a href="#{{guid}}">{{title}}</a>
+{{/each}}
+
+{{#each posts}}
+	<h2 id="{{guid}}">{{title}}</h2>
+	<p>{{{description}}}</p>
+{{/each}}

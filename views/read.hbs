@@ -1,0 +1,50 @@
+<div class="readBody">
+	
+		<div class="row">
+			<div class="small-12 columns">
+				<div class="title">
+					<!--if it's the first chapter, show a title card.  Otherwise just
+					put the title and author in a single row at the top-->
+					{{#if readChapter.firstChapter}}
+					<h1>{{story.title}}</h1>
+					by {{story.author}}	
+					{{else}}
+					<div class="row titleAuthor">
+						<div class="small-8 columns">
+							<span class="float-left"><h5>{{story.title}}</h5></span>
+						</div>
+						<div class="small-4 columns">
+							<span class="float-right">{{story.author}}</span>
+						</div>						
+					</div>
+					{{/if}}
+				</div>			
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-12 columns">
+				{{#with readChapter}}
+					<article>
+						<h1 id="chapter_{{index}}">{{title}}</h1>
+						<p>{{{body}}}</p>
+					</article>
+				{{/with}}			
+			</div>
+		</div>
+
+
+</div>
+	<div class="row" id="pageNav">
+		<div class="small-6 columns">
+			{{#if readChapter.prevIndex}}
+			<a href="/read/{{story.id}}/{{readChapter.prevIndex}}">&#8592; Prev</a>
+			{{/if}}			
+		</div>
+		<div class="small-6 columns float-right">
+			{{#if readChapter.nextIndex}}
+			<a class="float-right" href="/read/{{story.id}}/{{readChapter.nextIndex}}">Next &#8594;</a>
+			{{/if}}			
+		</div>	
+	</div>	
+
+

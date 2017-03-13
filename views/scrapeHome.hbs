@@ -1,0 +1,73 @@
+<div class="small-12 large-12 columns">
+<h1>Scrape</h1>
+<!--<ul class="none">
+{{#each stories}}
+	<li><a href="#" class="scrapeLink" data-id="{{id}}"><strong>{{title}}</strong></a> by {{author}}</li>
+{{/each}}
+</ul>-->
+
+<div>
+	<form action="/scrape" method="post">
+		<label for="story">Story</label>
+		<select name="story" id="story">
+			<option value="">Select a Story</option>
+			{{#each stories}}
+				<option value="{{id}}">{{title}} by {{author}}</option>
+			{{/each}}			
+		</select>
+		<label for="startingChapter">Starting Chapter</label>
+		<input type="number" id="startingChapter" name="startingChapter" value="1">
+		<div id="startUrlWrapper" class="hide">
+			<label class="" for="startUrl">Starting URL</label>
+			<input class="" type="url" id="startUrl" name="startUrl" value="" placeholder="Only use this if you're not starting from the beginning">
+		</div>
+		<div class="row">
+			<div class="large-4 columns">
+				<label for="maxChapters">Maximum Chapters</label>
+				<input type="number" id="maxChapters" name="maxChapters" value="3">				
+			</div>
+			<div class="large-4 columns">
+				<label for="delay">Delay (in ms)</label>
+				<input type="number" id="delay" name="delay" value="1000">
+			</div>
+			<div class="large-4 columns">
+				<label for="timeout">Timeout (in ms)</label>
+				<input type="number" id="timeout" name="timeout" value="30000">
+			</div>						
+		</div>
+		<div class="row">
+			<div class="large-12 columns">
+				<label for="">Scrape Comments?</label>
+				<div class="switch large">
+				  <input class="switch-input" id="scrapeComments" type="checkbox" name="scrapeComments">
+				  <label class="switch-paddle" for="scrapeComments">
+				    <span class="show-for-sr">Scrape Comments</span>
+				  </label>
+				</div>			
+			</div>
+		</div>		
+		<button id="submit" class="button float-right">Scrape!</button>
+
+	</form>
+</div>
+
+
+<script>
+//show the Starting URL if the starting chapter is not 1
+$("#startingChapter").change(
+	function(){
+		if($(this).val()!="1"){
+			$("#startUrlWrapper").removeClass("hide");
+		}else{
+			$("#startUrlWrapper").addClass("hide");
+		}
+	}
+);
+
+</script>
+
+
+
+
+
+

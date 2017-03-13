@@ -1,0 +1,33 @@
+<div class="small-12 large-4 columns">
+<h1>Get Reviewers</h1>
+<ul class="none">
+{{#each testUrls}}
+	<li><a href="?url={{url}}">{{name}}</a></li>
+{{/each}}
+</ul>
+<hr>
+<form method="get" action="">
+<label for="url">URL to Crawl:</label>
+<input type="url" id="url" name="url" 
+		value="">
+<input type="submit">
+</form>
+
+
+</div>
+<div class="small-12 large-8 columns">
+{{#if url}}
+<h2>{{title}}</h2>
+<div class="small"><a href="{{url}}" target="_blank">{{url}}</a></div>
+<h3>Reviewers</h3>
+<ul>
+	{{#each reviews}}
+		<li><a href="{{this.authorLink}}">{{this.author}}</a> - {{this.rating}}{{#if this.authorBadge}} ({{this.authorBadge}}){{/if}}</li>
+	{{/each}}
+</ul>
+</div>
+{{/if}}	
+</div>
+
+
+

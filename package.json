@@ -1,0 +1,29 @@
+{
+  "name": "SerialHelper",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "body-parser": "~1.15.2",
+    "cheerio": "^0.22.0",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.14.0",
+    "hbs": "~4.0.1",
+    "html-md": "^3.0.2",
+    "mongodb": "^2.2.24",
+    "morgan": "~1.7.0",
+    "multer": "^1.3.0",
+    "node-sass-middleware": "0.9.8",
+    "reload": "^1.1.0",
+    "serve-favicon": "~2.3.0",
+    "showdown": "^1.6.4"
+  },
+  "devDependencies": {
+    "osmosis": "^1.1.2",
+    "x-ray": "^2.3.1"
+  }
+}

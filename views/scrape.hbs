@@ -1,0 +1,47 @@
+<!--<div class="small-12 large-4 columns">
+<h1>Scrape Story</h1>
+<ul class="none">
+{{#each testUrls}}
+	<li><a href="?url={{url}}">{{name}}</a></li>
+{{/each}}
+</ul>
+<hr>
+<form method="get" action="">
+<label for="url">URL to Crawl:</label>
+<input type="url" id="url" name="url" 
+		value="">
+<input type="submit">
+</form>
+
+
+</div>
+-->
+<div class="small-12 large-12 columns">
+
+<!--<h2>{{title}}</h2>-->
+<!--<div class="small"><a href="{{url}}" target="_blank">{{url}}</a></div>-->
+	<!--{{#each chapters}}
+		<article>
+			<h1>{{this.title}}</h1>
+			<p>{{{this.body}}}</p>
+		</article>
+	{{/each}}-->
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>File Name</th>
+		</tr>
+		{{#each chapters}}
+		<tr>
+			<td>{{this.title}}</td>
+			<td>{{this.fileName}}</td>
+		</tr>
+		{{/each}}
+	</table>
+
+</div>
+
+
+
+
+

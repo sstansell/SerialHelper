@@ -1,0 +1,11 @@
+<div class="small-12 large-12 columns">
+<h1>{{title}}</h1>
+<div class="small"><a href="{{url}}" target="_blank">{{url}}</a></div>
+<h2>Reviewers</h2>
+<ul>
+	{{#each reviews}}
+		<li><a href="{{this.authorLink}}">{{this.author}}</a> - {{this.rating}}{{#if this.authorBadge}} ({{this.authorBadge}}){{/if}}</li>
+	{{/each}}
+</ul>
+
+</div>

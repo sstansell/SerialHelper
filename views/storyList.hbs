@@ -1,0 +1,35 @@
+<div class="small-12 large-12 columns">
+	<h1>Read</h1>
+	<!--<ul class="none">
+	{{#each stories}}
+		<li><a href="/read/{{id}}"><strong>{{title}}</strong></a> by {{author}}</li>
+	{{/each}}
+	</ul>-->
+	
+	<div class="row small-up-1 medium-up-1">
+		{{#each stories}}
+		<div class="column column-block">
+			<div class="card">
+				<!--<div class="image">
+					<a href="/read/{{id}}/1"><img src="{{image}}" alt="{{title}}"></a>
+				</div>-->
+				<div class="content">
+					<span class="title"><a href="/read/{{id}}/1">{{title}}</a></span><br>
+					by {{author}}
+					<p>{{description}}</p>
+				</div>
+				<div class="action">
+					<div class="float-right"><a href="/read/{{id}}/1">Read</a></div>
+				</div>
+			</div>
+		</div>
+		{{/each}}
+	</div>
+	
+</div>
+
+
+
+
+
+
