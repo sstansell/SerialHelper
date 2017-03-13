@@ -46,7 +46,7 @@
 				</div>			
 			</div>
 		</div>		
-		<button id="submit" class="button float-right">Scrape!</button>
+		<button id="submit" class="button float-right hide">Scrape!</button>
 
 	</form>
 </div>
@@ -63,7 +63,16 @@ $("#startingChapter").change(
 		}
 	}
 );
-
+//show the Scrape button once you've selected a story
+$("#story").change(
+	function(){
+		if($(this).val()!=""){
+			$("#submit").removeClass("hide");
+		}else{
+			$("#submit").addClass("hide");
+		}
+	}
+);
 </script>
 
 
