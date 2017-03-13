@@ -69,7 +69,7 @@ router.post('/', function(req, res, next){
 	var delay = req.body.delay;
 	if(delay){
 		options.delay = delay;
-	}
+	} 
 
 
 	var storyId = req.body.story;
@@ -117,10 +117,10 @@ router.post('/', function(req, res, next){
 function writeChapter(path, contents, create){
 	console.log("Writing to: " + path);
 	if(create){
-		console.log("Creating File");
+		//console.log("Creating File");
 		fs.writeFileSync(path, contents);
 	}else{
-		console.log("Updating File");
+		//console.log("Updating File");
 		fs.appendFileSync(path, contents);
 	}
 }
@@ -140,13 +140,14 @@ function crawl(url, story, options, cb){
 				var rawBody = $(story.bodySelector).html();
 				//clean the body using the story's custom function
 				chapter.body = story.bodyCleaner(rawBody);
-console.log(chapter.body);	
+
 				chapter.bodyText = md(chapter.body);
 			
 				chapters.push(chapter);
 
 				//write to the file
 				var output = "#" + chapter.title + "\n" + chapter.bodyText + "\n";
+				var htmlOutput = "<h1>" + chapter.title + "</h1>" + chapter.body;
 				//write to the full file
 				//var fullFile = path.join(options.filePath, story.outputFolder, story.fileName)
 				//writeChapter(fullFile, output, bFirstChapter);
@@ -158,8 +159,11 @@ console.log(chapter.body);
 				}
 				var chapterIndex = padLeft(options.currentChapter, 3)
 				//var chapterFileName = sanitize(chapterIndex+"_"+chapter.title);
-				var chapterFile = path.join(options.filePath, story.outputFolder, sanitize(chapterIndex+"_"+chapter.title + ".md"))
+				var chapterFile = path.join(options.filePath, story.outputFolder, sanitize(chapterIndex+"_"+chapter.title + ".md"));
+				var chapterHtmlFile = path.join(options.filePath, story.outputFolder, sanitize(chapterIndex+"_"+chapter.title + ".html"));
 				writeChapter(chapterFile, output, true);
+				writeChapter(chapterHtmlFile, htmlOutput, true);
+				
 				chapter.fileName = sanitize(chapterIndex+"_"+chapter.title + ".md");
 
 				var nextUrl = $(story.nextLinkSelector).attr('href');
