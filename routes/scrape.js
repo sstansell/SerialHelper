@@ -11,8 +11,9 @@ var cheerio = require('cheerio');
 var sanitize = require("sanitize-filename");
 
 //get the list of stories
-var storyList = require(path.join(appRoot.toString(), 'data/stories.js'));
-var stories = storyList.list;
+var s = require(path.join(appRoot.toString(), 'modules/stories.js'));
+//var storyList = s();
+var stories = s().getStoryList();
 
 
 // CONFIG
@@ -86,7 +87,7 @@ router.post('/', function(req, res, next){
 
 	if(scrapeUrl.length>0){
 		console.log("URL: " + scrapeUrl);
-		console.log("User Agent: " + _userAgent);
+		//console.log("User Agent: " + _userAgent);
 		//console.log("Creating File: " + _fileName);
 		crawl(scrapeUrl, story, options, 
 			function(success, chapters){		
@@ -127,7 +128,7 @@ function writeChapter(path, contents, create){
 
 function crawl(url, story, options, cb){
 	console.log("Crawling: " + url);
-	console.log(options);
+	//console.log(story);
 	var bFirstChapter = (url==story.url);
 
 	fetch(url, 
@@ -139,7 +140,9 @@ function crawl(url, story, options, cb){
 				chapter.title = $(story.titleSelector).text();
 				var rawBody = $(story.bodySelector).html();
 				//clean the body using the story's custom function
-				chapter.body = story.bodyCleaner(rawBody);
+				//chapter.body = story.bodyCleaner(rawBody);
+				chapter.body = cleanBody(rawBody, story.bodyCleaner);
+
 
 				chapter.bodyText = md(chapter.body);
 			
@@ -163,7 +166,7 @@ function crawl(url, story, options, cb){
 				var chapterHtmlFile = path.join(options.filePath, story.outputFolder, sanitize(chapterIndex+"_"+chapter.title + ".html"));
 				writeChapter(chapterFile, output, true);
 				writeChapter(chapterHtmlFile, htmlOutput, true);
-				
+
 				chapter.fileName = sanitize(chapterIndex+"_"+chapter.title + ".md");
 
 				var nextUrl = $(story.nextLinkSelector).attr('href');
@@ -232,6 +235,46 @@ function fetch(url, cb) {
 function padLeft(nr, n, str){
     return Array(n-String(nr).length+1).join(str||'0')+nr;
 }
+
+
+//BODY CLEANER FUNCTIONS
+
+function cleanBody(body,functionName){
+	var ret = body;
+
+	if(functionName=="removeFunkySpaces"){
+		ret = bodyCleaner.removeFunkySpaces(ret);
+	}
+	if(functionName=="removeNav"){
+		ret = bodyCleaner.removeNav(ret);
+	}
+
+
+	return ret;
+}
+
+var bodyCleaner = {
+	removeFunkySpaces:function(body){
+		var ret = body;
+		var funkySpaces = /&#xA0;/gi;
+		ret = ret.replace(funkySpaces, '');
+		var asterisks = /\* \* \*/gi;
+		ret = ret.replace(asterisks, "* * *")					
+		return ret;
+	},
+	removeNav: function(body){
+		var $ = cheerio.load(body);
+		$("#jp-post-flair").remove();
+		$("p[style='text-align:right;']").remove();
+		$("p[style='text-align:center;']").remove();
+		$( "a[title='Next Chapter']" ).remove();
+		$( "a[title='Last Chapter']" ).remove();
+		var ret = $.html();
+		return ret;
+	}
+
+}
+
 
 module.exports = router;
 

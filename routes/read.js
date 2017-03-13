@@ -6,14 +6,16 @@ var path = require('path');
 var appRoot = require('app-root-path');
 var showdown  = require('showdown')
 var dir = require('node-dir');
-
-var storyList = require(path.join(appRoot.toString(), 'data/stories.js'));
-var stories = storyList.list;
+ 
+var s = require(path.join(appRoot.toString(), 'modules/stories.js'));
+var storyList = s();
+var stories = storyList.getStoryList();
 
 var _filePath = path.join(appRoot.toString(), 'output');
 
 //ROUTERS
 router.get('/', function(req, res) {
+
 	res.render('storyList', {stories: stories});
 });
 
