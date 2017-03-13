@@ -1,4 +1,4 @@
 {
   "verbose": true,
-  "ignore": ["*.md", "*.git"]
+  "ignore": ["*.md", "*.gitignore", "*.gitattributes", ".git"]
 }
