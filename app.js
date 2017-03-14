@@ -11,7 +11,7 @@ var index = require('./routes/index');
 var amazon = require('./routes/amazon');
 var scrape = require('./routes/scrape');
 var read = require('./routes/read');
-
+var edit = require('./routes/edit');
 
 var app = express();
  
@@ -43,6 +43,7 @@ app.use('/', index);
 app.use('/amazon', amazon);
 app.use('/scrape', scrape);
 app.use('/read', read);
+app.use('/edit', edit);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
