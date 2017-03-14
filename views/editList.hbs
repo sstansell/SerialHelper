@@ -1,0 +1,25 @@
+<div class="small-12 large-12 columns">
+	<h1>Manage</h1>
+	<!--<ul class="none">
+	{{#each stories}}
+		<li><a href="/read/{{id}}"><strong>{{title}}</strong></a> by {{author}}</li>
+	{{/each}}
+	</ul>-->
+	
+	<table>
+		<tr>
+			<th>Title</th>
+			<th>Author</th>
+		</tr>
+		{{#each stories}}
+		<tr>
+			<td>
+				<a href="/edit/{{id}}/1">{{title}}</a>
+			</td>
+			<td>
+				{{author}}
+			</td>
+		</tr>
+		{{/each}}
+	</table>
+

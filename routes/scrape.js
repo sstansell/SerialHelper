@@ -15,7 +15,7 @@ var s = require(path.join(appRoot.toString(), 'modules/stories.js'));
 //var storyList = s();
 var stories = s().getStoryList();
 
-
+ 
 // CONFIG
 var mongoUrl = 'mongodb://10.0.0.15:27017/books';  
 
