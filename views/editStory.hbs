@@ -1,0 +1,95 @@
+
+<div class="small-12 columns">
+	<h1>Edit Story</h1>
+	{{#if message}}
+	<h2>{{message}}</h2>
+	{{/if}}	
+	{{#with editStory}}
+	<form  id="frmEdit" method="post">
+		<input type="hidden" name="dbId" value="{{_id}}">
+		<label for="id">id</label>
+		<input type="text" id="id" name="id" value="{{id}}">
+		<label for="title">Title</label>
+		<input type="text" id="title" name="title" value="{{title}}">
+		<label for="author">Author</label>
+		<input type="text" id="author" name="author" value="{{author}}">
+		<label for="description">Description</label>
+		<textarea name="description" id="description" cols="30" rows="10">{{{description}}}</textarea>
+		<div class="row">
+			<div class="small-6 medium-3 columns">
+				<img src="{{image}}" alt="{{title}}">
+			</div>
+			<div class="small-6 medium-9 columns">
+				<button class="button">Change</button>	
+			</div>	
+		</div>
+
+		<hr>
+		<label for="outputFolder">Output Folder</label>
+		<input type="text" id="outputFolder" name="outputFolder" value="{{outputFolder}}">		
+		<label for="url">URL</label>
+		<input type="url" id="url" name="url" value="{{url}}">
+		<label for="baseUrl">Base URL</label>
+		<input type="url" id="baseUrl" name="baseUrl" value="{{baseUrl}}">
+		<div class="row">
+			<div class="small-12 medium-4 columns">
+				<label for="titleSelector">Title Selector</label>
+				<input type="text" id="titleSelector" name="titleSelector" value="{{titleSelector}}">				
+			</div>
+			<div class="small-12 medium-4 columns">
+				<label for="bodySelector">Body Selector</label>
+				<input type="text" id="bodySelector" name="bodySelector" value="{{bodySelector}}">	
+			</div>
+			<div class="small-12 medium-4 columns">
+				<label for="nextLinkSelector">Next Link Selector</label>
+				<input type="text" id="nextLinkSelector" name="nextLinkSelector" value="{{nextLinkSelector}}">	
+			</div>
+		</div>
+		<div class="row">
+			<div class="small-12 medium-6 columns">
+				<label for="titleCleaner">Title Cleaner</label>
+				<input type="text" id="titleCleaner" name="titleCleaner" value="{{titleCleaner}}">
+			</div>
+			<div class="small-12 medium-6 columns">
+				<label for="bodyCleaner">Body Cleaner</label>
+				<input type="text" id="bodyCleaner" name="bodyCleaner" value="{{bodyCleaner}}">
+			</div>			
+		</div>
+		<button id="submit" class="button float-right">Update</button>
+
+
+						
+	</form>
+	{{/with}}
+</div>
+
+<script>
+$(document).ready(function(){ 
+    $("#frmEdit").submit(function(event){ 
+
+        event.preventDefault(); 
+		var storyId = $("#id").val();
+		console.log(storyId);
+		$.post( "/edit/"+storyId, $( "#frmEdit" ).serialize() )
+		.done(
+			function(data){
+				var bar = $.peekABar({
+					html: data,
+					autohide: true,
+					padding: '1rem',
+					backgroundColor: '#51bc81',
+					animation: {
+						type: 'fade',
+						duration: '2000'
+					},
+					opacity: '0.8',
+					position: 'bottom'
+				});	
+				bar.show();			
+				
+			}
+		);
+    }); 
+});
+
+</script>

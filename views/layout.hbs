@@ -4,13 +4,15 @@
     {{#if story}}
     <title>{{story.title}}</title>
     {{else}}
-    <title>Serial Killer</title>
+    <title>Serial Helper</title>
     {{/if}}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel='stylesheet' href='/stylesheets/foundation.min.css' />
     <link rel='stylesheet' href='/stylesheets/style.css' />
-    <script src="/javascripts/jquery-3.1.1.slim.min.js"></script>
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/jquery.peekabar.min.js"></script>
+    <script src="/javascripts/localforage.min.js"></script>
   </head>
   <body {{#if story}}class="readMode"{{else}}class="notReadMode"{{/if}}>
 {{#if chapters}}
@@ -64,6 +66,7 @@
   	    {{{body}}}	
   	</div>
     <script src="/javascripts/foundation.min.js"></script>
+
     <script>
       $(document).foundation();
     </script>

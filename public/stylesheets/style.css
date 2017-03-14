@@ -442,3 +442,7 @@ div.titleAuthor{
 .hamburger .line:last-child {
   margin-bottom: 0;
 }
+
+
+
+.peek-a-bar{margin:0;position:fixed;width:100%;left:0;right:0;text-align:center}

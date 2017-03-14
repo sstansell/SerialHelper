@@ -3,12 +3,47 @@ var MongoClient = require('mongodb').MongoClient
 
 // Connection URL
 var url = 'mongodb://localhost:27017/serialHelper';
-
+var collectionName = "stories"
 
 
 function Stories() {
 
   var list = [];
+
+	function update(story){
+		var ObjectID = require('mongodb').ObjectID;
+		var storyId = new ObjectID(story._id);
+		console.log(storyId);
+		MongoClient.connect(url, function(err, db) {
+			assert.equal(null, err);
+			//console.log("Connected correctly to mongo server");
+			var collection = db.collection(collectionName)
+			   collection.updateOne(
+			      { "_id" : storyId },
+			      { $set: 	{ 
+				      			"id":story.id, 
+				      			"title":story.title, 
+				      			"author": story.author,
+				      			"description": story.description,
+				      			"outputFolder": story.outputFolder,
+				      			"url": story.url,
+				      			"baseUrl": story.baseUrl,
+				      			"titleSelector": story.titleSelector,
+				      			"bodySelector": story.bodySelector,
+				      			"nextLinkSelector": story.nextLinkSelector,
+				      			"titleCleaner": story.titleCleaner,
+				      			"bodyCleaner": story.bodyCleaner
+			      			} 
+			      },
+			      function(err){
+			      	console.log("updated")
+			      	return(err);
+			      	db.close();
+			      }
+			   );
+			
+		});	 
+	}
 
   function getStoryList() {
   	console.log("Getting story list");
@@ -28,15 +63,16 @@ function Stories() {
   }
 
   return {
-    getStoryList: getStoryList
+    getStoryList: getStoryList,
+    update: update
   }
 }
 
 var findDocuments = function(db, callback) {
 	// Get the documents collection
-	var collection = db.collection('stories');
+	var collection = db.collection(collectionName);
 	// Find some documents
-	collection.find({}).toArray(function(err, docs) {
+	collection.find({}).sort( { author: 1, title: 1 }).toArray(function(err, docs) {
 	//console.log(err)
 	assert.equal(err, null);
 	//console.log("Found the following records");
@@ -44,6 +80,10 @@ var findDocuments = function(db, callback) {
 	callback(docs);
 	});
 } 
+
+var updateDocument = function(db, document, callback){
+
+}
 
 
 module.exports = Stories
