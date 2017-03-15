@@ -88,7 +88,10 @@ router.get('/:storyId/:chapterId', function(req, res) {
 	       			readChapter.firstChapter = true;
 	       		}
 	        	readChapter.title = title;
-	        	readChapter.body = converter.makeHtml(content.substring(titleEndIndex+1));
+	        	readChapter.textBody = content.substring(titleEndIndex+1);
+	        	readChapter.body = converter.makeHtml(readChapter.textBody);
+	        	readChapter.fileName = filename.substring(filename.lastIndexOf("\\")+1);
+	        	readChapter.content = content.replace(/"/g, "\\\"");
 	        }
 	        //var body = converter.makeHtml(content.substring(titleEndIndex+1));
 	        var chapter = {

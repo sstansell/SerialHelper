@@ -1,6 +1,4 @@
-<script>
-var story = {{story}}
-</script>
+
 <div class="readBody">
 	
 		<div class="row">
@@ -28,8 +26,8 @@ var story = {{story}}
 			<div class="small-12 columns">
 				{{#with readChapter}}
 					<article>
-						<h1 id="chapter_{{index}}">{{{title}}}</h1>
-						<p>{{{body}}}</p>
+						<h1 id="chapterTitle">{{{title}}}</h1>
+						<span id="chapterBody">{{{body}}}</span>
 					</article>
 				{{/with}}			
 			</div>
@@ -49,5 +47,72 @@ var story = {{story}}
 			{{/if}}			
 		</div>	
 	</div>	
+
+<script>
+	var storyId = "{{story._id}}"
+	var bChapterExists = false;
+	var bStoryExists = false;
+
+	var story = {
+		title: "{{story.title}}",
+		author: "{{story.author}}",
+		id: "{{story.id}}",
+		_id: "{{story._id}}",
+		url: "{{story.url}}"
+	}		
+	var chapter = {
+		index: "{{readChapter.index}}",
+		nextIndex: "{{readChapter.nextIndex}}",
+		prevIndex: "{{readChapter.prevIndex}}",
+		firstChapter: "{{readChapter.firstChapter}}",
+		title: "{{readChapter.title}}",
+		fileName: "{{readChapter.fileName}}"
+	}
+	chapter.body = $("#chapterBody").html();
+
+	var storyStore = localforage.createInstance({
+		name: storyId
+	});
+
+	storyStore.getItem("story", function(err, value){
+		if(value){
+			bStoryExists = true;
+			var curStory = value;
+			var chapters = curStory.chapters
+			//figure out if we have this chapter, if not add it
+			for(var i=0, len = chapters.length; i<len; i++){
+				if(chapters[i].index==chapter.index){
+					bChapterExists = true;
+					//update the chapter with current info
+					chapters[i] = chapter
+				}
+			}
+			if(!bChapterExists){
+				curStory.chapters.push(chapter);
+			}
+			story = curStory;
+			storyStore.setItem("story", curStory);
+
+		}else{
+
+			story.chapters = [];
+			story.chapters.push(chapter);
+			storyStore.setItem("story", story);		
+		}
+	})
+
+
+
+
+
+
+	/*story.chapters.push(chapter);
+	console.log(chapter)
+
+
+	storyStore.setItem("story", story);*/
+
+</script>
+
 
 
