@@ -12,6 +12,7 @@
     reader.chapterId = chapterId;
     reader.initialize();
     reader.loadChapter(reader.storyId, reader.chapterId);
+    reader.buildChapterList(reader.storyId, reader.chapterId)
     window.scrollTo(0, 0);
   };
 
@@ -81,5 +82,24 @@
 	</div>		
 </script>
 
+
+<script id="chapterList-template" type="text/x-handlebars-template">
+        \{{#each chapters}}
+          <li class="off-canvas-menu-item"><a href="/read/chapter#\{{storyId}}/\{{index}}">\{{title}}</a></li>
+        \{{/each}}
+</script>
+
+<script id="chapterButton-template" type="text/x-handlebars-template">
+	<li>
+	  <button class="offcanvas-trigger" type="button" data-open="offCanvasRight">
+	    <span class="offcanvas-trigger-text hide-for-small-only">ToC&nbsp;</span>
+	    <div class="hamburger">
+	      <span class="line"></span>
+	      <span class="line"></span>
+	      <span class="line"></span>
+	    </div>
+	  </button>
+	</li>
+</script>
 
 

@@ -13,19 +13,19 @@
     <script src="/javascripts/app.js"></script>
   </head>
   <body class="readMode">
-    {{#if chapters}}
+
     <div class="off-canvas position-right" id="offCanvasRight" data-off-canvas>
 
 
-      <ul class="vertical menu">
-        {{#each chapters}}
+      <ul class="vertical menu" id="chapterList">
+        <!--{{#each chapters}}
           <li class="off-canvas-menu-item"><a href="/read/{{../story.id}}/{{index}}">{{title}}</a></li>
-        {{/each}}
+        {{/each}}-->
       </ul>
 
 
     </div>
-    {{/if}}
+
     <div class="off-canvas-content" data-off-canvas-content>
       <div data-sticky-container>
       <div class="nav-bar" data-sticky data-options="stickTo:top;marginTop:0" style="width:100%">
@@ -36,12 +36,10 @@
           </ul> 
         </div>
         <div class="nav-bar-right">
-          <ul class="menu">
-
-            {{#if chapters}}
+          <ul class="menu hide" id="tocMenu">
             <li>
               <button class="offcanvas-trigger" type="button" data-open="offCanvasRight">
-                <span class="offcanvas-trigger-text hide-for-small-only">ToC&nbsp;</span>
+                <span class="offcanvas-trigger-text hide-for-small-only">&nbsp;</span>
                 <div class="hamburger">
                   <span class="line"></span>
                   <span class="line"></span>
@@ -49,15 +47,10 @@
                 </div>
               </button>
             </li>
-            {{/if}}
           </ul>
         </div>
       </div>
-
     </div>
-
-
-
     <div class="row">
         {{{body}}}  
     </div>

@@ -2,6 +2,18 @@
 	storyId:"",
 	chapterId: "",
 	chapterList: [],
+	buildChapterList: function(storyId, chapterId){
+		reader.fetchChapterList(storyId, 
+			function(chapters){
+				//add the story id to each chapter (to make it easier to render)
+				for (var i = 0, len = chapters.length; i < len; i++) {
+					chapters[i].storyId = storyId
+				}
+				reader.renderChapterList(chapters);
+				$("#tocMenu").removeClass("hide");
+			}
+		)
+	},
 	loadChapter:function(storyId, chapterId){
 		var bChapterExists = false;
 		var bStoryExists = false;
@@ -29,17 +41,17 @@
 								//build the chapter
 								story.chapters.push(data);
 								story.readChapter = data;
-								reader.render(story);
+								reader.renderChapter(story);
 								reader.fetchChapterList(reader.storyId, function(data){
 									reader.chapterList = data;
 									reader.updateStorage(reader.storyStore, "chapterList", reader.chapterList);
 								})										
 								reader.updateStorage(reader.storyStore, "story", story);
-								
+
 							} 
 						)
 					}else{
-						reader.render(story);
+						reader.renderChapter(story);
 						reader.fetchChapterList(reader.storyId, function(data){
 							reader.chapterList = data;
 							reader.updateStorage(reader.storyStore, "chapterList", reader.chapterList);
@@ -57,7 +69,7 @@
 								//build the chapter
 								story.chapters.push(data);
 								story.readChapter = data;
-								reader.render(story);
+								reader.renderChapter(story);
 								reader.fetchChapterList(reader.storyId, function(data){
 									reader.chapterList = data;
 									reader.updateStorage(reader.storyStore, "chapterList", reader.chapterList);
@@ -102,7 +114,7 @@
 			}
 		)
 	},
-	render:function(story){
+	renderChapter:function(story){
 		var bodyTemplate   = $("#body-template").html();
 		var template = Handlebars.compile(bodyTemplate);
 		var context = {
@@ -110,6 +122,14 @@
 		}
 		$("#bodyContainer").html(template(context));		
 	},
+	renderChapterList:function(chapterList){
+		var chapterTemplate   = $("#chapterList-template").html();
+		var template = Handlebars.compile(chapterTemplate);
+		var context = {
+			chapters: chapterList
+		}
+		$("#chapterList").append(template(context));		
+	},	
 	updateStorage:function(dataStore, key, value){
 		dataStore.setItem(key, value).then(function (value) {
 		    // Do other things once the value has been saved.
