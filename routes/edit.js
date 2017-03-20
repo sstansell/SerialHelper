@@ -8,7 +8,6 @@ var appRoot = require('app-root-path');
 var s = require(path.join(appRoot.toString(), 'modules/stories.js'));
 var storyList = s();
 var stories = storyList.getStoryList();
-console.log(storyList);
 
 
 //ROUTERS

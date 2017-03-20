@@ -13,7 +13,7 @@ function Stories() {
 	function update(story){
 		var ObjectID = require('mongodb').ObjectID;
 		var storyId = new ObjectID(story._id);
-		console.log(storyId);
+
 		MongoClient.connect(url, function(err, db) {
 			assert.equal(null, err);
 			//console.log("Connected correctly to mongo server");
@@ -46,7 +46,7 @@ function Stories() {
 	}
 
   function getStoryList() {
-  	console.log("Getting story list");
+  	//console.log("Getting story list");
 	MongoClient.connect(url, function(err, db) {
 	  assert.equal(null, err);
 	  //console.log("Connected correctly to mongo server");

@@ -6,18 +6,44 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var reload = require('reload')
+var hbs = require('express-hbs');
 
+var helpers = require('./modules/helpers');
 var index = require('./routes/index');
 var amazon = require('./routes/amazon');
 var scrape = require('./routes/scrape');
 var read = require('./routes/read');
 var edit = require('./routes/edit');
+var api = require('./routes/api');
 
 var app = express();
+
+ 
+hbs.registerHelper('yell', function(message) {
+  return message.toUpperCase();
+});
+hbs.registerHelper('debug', function(data, breakpoint){
+    console.log(data);
+    if (breakpoint === true) {   
+        debugger;
+    }
+    return '';    
+})
  
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+// Use `.hbs` for extensions and find partials in `views/partials`.
+app.engine('hbs', hbs.express4({
+  partialsDir: __dirname + '/views/partials',
+  layoutsDir: __dirname +'views/layouts',
+  defaultLayout: 'views/layouts/main'
+}));
 app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'hbs');
+
+
+
+
 
 // uncomment after placing your favicon in /public
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -44,6 +70,7 @@ app.use('/amazon', amazon);
 app.use('/scrape', scrape);
 app.use('/read', read);
 app.use('/edit', edit);
+app.use('/api', api);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

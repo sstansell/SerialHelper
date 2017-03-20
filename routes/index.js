@@ -6,7 +6,7 @@ var path = require('path');
 var appRoot = require('app-root-path');
 var request = require('request');
 var cheerio = require('cheerio');
-var storyList = require(path.join(appRoot.toString(), 'data/stories.js'));
+var storyList = require(path.join(appRoot.toString(), 'modules/stories.js'));
 var stories = storyList.list;
 
 var posts = [];

@@ -244,14 +244,20 @@ div.titleAuthor{
 		font-size:20px;
 	}
 	article{
-		padding: 2rem 0;
+		padding: 0 0 2rem 0;
 	}
 	body.readMode{
 		background-color: #f7f7f7;
 	}
+  div.title{
+    padding-bottom: .5rem;
+  }
 	div.title h1{
 		font-size: 2.369rem;
-	}	
+	}
+  h1#chapterTitle{
+    font-size: 1.777rem;
+  }	
 }
 @media (min-width: 40em) {
 	div.readBody, #pageNav{

@@ -1,117 +1,84 @@
-
-<div class="readBody">
+<div id="bodyContainer">
 	
+</div>
+
+
+<script>
+  //var read = function () { console.log("read"); };
+  //var story = function (storyId) { console.log(storyId); };
+  var readChapter = function (storyId, chapterId) {
+    console.log("readChapter: " + storyId + " - " + chapterId);
+    reader.storyId = storyId;
+    reader.chapterId = chapterId;
+    reader.initialize();
+    reader.loadChapter(reader.storyId, reader.chapterId);
+    window.scrollTo(0, 0);
+  };
+
+  var routes = {
+  //'/:storyId': story,
+  '/:storyId/:chapterId': readChapter
+  };
+
+  var router = Router(routes);
+
+  router.init();
+</script>
+
+<script id="body-template" type="text/x-handlebars-template">
+	<div class="readBody">
 		<div class="row">
 			<div class="small-12 columns">
 				<div class="title">
 					<!--if it's the first chapter, show a title card.  Otherwise just
 					put the title and author in a single row at the top-->
-					{{#if readChapter.firstChapter}}
-					<h1>{{story.title}}</h1>
-					by {{story.author}}	
-					{{else}}
-					<div class="row titleAuthor">
+					\{{#if readStory.readChapter.firstChapter}}
+					<h1>\{{{readStory.title}}}</h1>
+					by \{{readStory.author}}
+					<hr>	
+					\{{else}}
+					<!--<div class="row titleAuthor">
 						<div class="small-8 columns">
-							<span class="float-left"><h5>{{story.title}}</h5></span>
+							<span class="float-left"><h5>\{{{readStory.title}}}</h5></span>
 						</div>
 						<div class="small-4 columns">
-							<span class="float-right">{{story.author}}</span>
+							<span class="float-right">\{{readStory.author}}</span>
 						</div>						
+					</div>-->
+					<div class="row titleAuthor">
+						<div class="small-12 columns">
+							<h5>\{{{readStory.title}}}</h5>
+							<!--\{{readStory.author}}-->
+						</div>
 					</div>
-					{{/if}}
+					\{{/if}}
 				</div>			
 			</div>
 		</div>
 		<div class="row">
 			<div class="small-12 columns">
-				{{#with readChapter}}
+				\{{#with readStory.readChapter}}
 					<article>
-						<h1 id="chapterTitle">{{{title}}}</h1>
-						<span id="chapterBody">{{{body}}}</span>
+						<h1 id="chapterTitle">\{{{title}}}</h1>
+						<span id="chapterBody">\{{{body}}}</span>
 					</article>
-				{{/with}}			
+				\{{/with}}			
 			</div>
 		</div>
-
-
-</div>
+	</div>
+	{{debug readStory.readChapter.prevIndex false}}
 	<div class="row" id="pageNav">
 		<div class="small-6 columns">
-			{{#if readChapter.prevIndex}}
-			<a href="/read/{{story.id}}/{{readChapter.prevIndex}}">&#8592; Prev</a>
-			{{/if}}			
+			\{{#if readStory.readChapter.prevIndex}}
+			<a href="/read/chapter#\{{readStory._id}}/\{{readStory.readChapter.prevIndex}}">&#8592; Prev</a>
+			\{{/if}}			
 		</div>
 		<div class="small-6 columns float-right">
-			{{#if readChapter.nextIndex}}
-			<a class="float-right" href="/read/{{story.id}}/{{readChapter.nextIndex}}">Next &#8594;</a>
-			{{/if}}			
+			\{{#if readStory.readChapter.nextIndex}}
+			<a class="float-right" href="/read/chapter#\{{readStory._id}}/\{{readStory.readChapter.nextIndex}}">Next &#8594;</a>
+			\{{/if}}			
 		</div>	
-	</div>	
-
-<script>
-	var storyId = "{{story._id}}"
-	var bChapterExists = false;
-	var bStoryExists = false;
-
-	var story = {
-		title: "{{story.title}}",
-		author: "{{story.author}}",
-		id: "{{story.id}}",
-		_id: "{{story._id}}",
-		url: "{{story.url}}"
-	}		
-	var chapter = {
-		index: "{{readChapter.index}}",
-		nextIndex: "{{readChapter.nextIndex}}",
-		prevIndex: "{{readChapter.prevIndex}}",
-		firstChapter: "{{readChapter.firstChapter}}",
-		title: "{{readChapter.title}}",
-		fileName: "{{readChapter.fileName}}"
-	}
-	chapter.body = $("#chapterBody").html();
-
-	var storyStore = localforage.createInstance({
-		name: storyId
-	});
-
-	storyStore.getItem("story", function(err, value){
-		if(value){
-			bStoryExists = true;
-			var curStory = value;
-			var chapters = curStory.chapters
-			//figure out if we have this chapter, if not add it
-			for(var i=0, len = chapters.length; i<len; i++){
-				if(chapters[i].index==chapter.index){
-					bChapterExists = true;
-					//update the chapter with current info
-					chapters[i] = chapter
-				}
-			}
-			if(!bChapterExists){
-				curStory.chapters.push(chapter);
-			}
-			story = curStory;
-			storyStore.setItem("story", curStory);
-
-		}else{
-
-			story.chapters = [];
-			story.chapters.push(chapter);
-			storyStore.setItem("story", story);		
-		}
-	})
-
-
-
-
-
-
-	/*story.chapters.push(chapter);
-	console.log(chapter)
-
-
-	storyStore.setItem("story", story);*/
-
+	</div>		
 </script>
 
 

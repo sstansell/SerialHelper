@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Serial Helper</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel='stylesheet' href='/stylesheets/foundation.min.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/jquery-3.1.1.min.js"></script>
+    <script src="/javascripts/jquery.peekabar.min.js"></script>
+    <script src="/javascripts/localforage.min.js"></script>
+    <script src="/javascripts/handlebars.min.js"></script>    
+  </head>
+  <body class="notReadMode">
+
+    <div class="off-canvas-content" data-off-canvas-content>
+      <div data-sticky-container>
+      <div class="nav-bar" data-sticky data-options="stickyOn:small;stickTo:top;marginTop:0" style="width:100%">
+        <div class="nav-bar-left">
+          <!--<a class="nav-bar-logo" href="/">Home</a>-->
+          <ul class="menu">
+            <li class=""><a href="/read">Read</a></li>
+            <li class=""><a href="/scrape">Scrape</a></li>
+            <li class=""><a href="/edit">Manage</a></li>     
+          </ul> 
+        </div>
+        <div class="nav-bar-right">
+          <ul class="menu">
+
+            {{#if chapters}}
+            <li>
+              <button class="offcanvas-trigger" type="button" data-open="offCanvasRight">
+                <span class="offcanvas-trigger-text hide-for-small-only">ToC&nbsp;</span>
+                <div class="hamburger">
+                  <span class="line"></span>
+                  <span class="line"></span>
+                  <span class="line"></span>
+                </div>
+              </button>
+            </li>
+            {{/if}}
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+
+
+  	<div class="row">
+  	    {{{body}}}	
+  	</div>
+    <script src="/javascripts/foundation.min.js"></script>
+
+    <script>
+      $(document).foundation();
+    </script>
+
+  </body>
+</html>
