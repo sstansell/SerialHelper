@@ -21,7 +21,11 @@ router.get('/', function(req, res) {
 	)
 });
 
-
+router.get('/storyList', function(req,res){
+	res.json(
+		stories
+	);	
+})
 
 router.get('/story/:storyId', function(req,res){
 	var storyId = req.params.storyId;
