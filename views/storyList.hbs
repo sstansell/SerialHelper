@@ -6,27 +6,35 @@
 	{{/each}}
 	</ul>-->
 	
-	<div class="row small-up-1 medium-up-1">
-		{{#each stories}}
-		<div class="column column-block">
-			<div class="card">
-				<!--<div class="image">
-					<a href="/read/{{id}}/1"><img src="{{image}}" alt="{{title}}"></a>
-				</div>-->
-				<div class="content">
-					<span class="title"><a href="/read/chapter#{{_id}}/1">{{title}}</a></span><br>
-					by {{author}}
-					<p class="hide-for-small-only">{{description}}</p>
-				</div>
-				<div class="action">
-					<div class="float-right"><a href="/read/chapter#{{_id}}/1">Read</a></div>
-				</div>
-			</div>
-		</div>
-		{{/each}}
+	<div class="row small-up-1 medium-up-1" id="storyList">
+
 	</div>
 	
 </div>
+
+<script>
+	reader.buildStoryList();
+</script>
+
+<script id="storyList-template" type="text/x-handlebars-template">
+		\{{#each stories}}
+		<div class="column column-block">
+			<div class="card">
+				<!--<div class="image">
+					<a href="/read/\{{id}}/1"><img src="\{{image}}" alt="\{{title}}"></a>
+				</div>-->
+				<div class="content">
+					<span class="title"><a href="/read/chapter#\{{_id}}/1">\{{title}}</a></span><br>
+					by \{{author}}
+					<p class="hide-for-small-only">\{{description}}</p>
+				</div>
+				<div class="action">
+					<div class="float-right"><a href="/read/chapter#\{{_id}}/1">Read</a></div>
+				</div>
+			</div>
+		</div>
+		\{{/each}}	
+</script>
 
 
 
