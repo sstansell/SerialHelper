@@ -2,6 +2,24 @@
 	storyId:"",
 	chapterId: "",
 	chapterList: [],
+	storyList: [],
+	buildStoryList: function(){
+		var stories = [];
+		reader.storyListStore.getItem("stories", 
+			function(err, value){
+				if(value){
+					stories = value;
+					reader.renderStoryList(stories);
+				}else{
+					reader.fetchStoryList(function(storyList){
+						stories = storyList;
+						reader.renderStoryList(stories)
+						reader.storyListStore.setItem("stories", stories);
+					})
+				}
+			}
+		)
+	},
 	buildChapterList: function(storyId, chapterId){
 		reader.fetchChapterList(storyId, 
 			function(chapters){
@@ -114,6 +132,15 @@
 			}
 		)
 	},
+	fetchStoryList:function(cb){
+		var url = "/api/storyList" ;
+		//console.log(url);
+		$.getJSON(url, 
+			function(data){
+				cb(data);
+			}
+		)
+	},	
 	renderChapter:function(story){
 		var bodyTemplate   = $("#body-template").html();
 		var template = Handlebars.compile(bodyTemplate);
@@ -129,7 +156,15 @@
 			chapters: chapterList
 		}
 		$("#chapterList").append(template(context));		
-	},	
+	},
+	renderStoryList:function(storyList){
+		var storyTemplate   = $("#storyList-template").html();
+		var template = Handlebars.compile(storyTemplate);
+		var context = {
+			stories: storyList
+		}
+		$("#storyList").html(template(context));		
+	},		
 	updateStorage:function(dataStore, key, value){
 		dataStore.setItem(key, value).then(function (value) {
 		    // Do other things once the value has been saved.
@@ -140,9 +175,12 @@
 		});
 	},
 	storyStore: {},
+	storyListStore: localforage.createInstance({
+			name: "storyList"
+	}),
 	initialize: function(storyId){
 		this.storyStore = localforage.createInstance({
-		name: reader.storyId
+			name: reader.storyId
 		})
 	}						
   };
